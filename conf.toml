@@ -1,0 +1,20 @@
+yellow_price = 2820
+blue_price = 4700
+purple_price = 5000
+
+# In 3.26, this is the best possible wilt rate, using infused harvest craft
+# and the atlas tree
+wilt_rate = 0.4
+
+# There were empirically determined by Forgotten Arbiter,
+# https://forgottenarbiter.github.io/Poe-Harvest-Mechanics/
+t2_transition = 0.25
+t3_transition = 0.20
+t4_transition = 0.03
+
+# T1-3 seeds are affected by pack size, but T4 isn't
+pack_size = 110
+
+# Ignoring duplicated drops, what is the average value of a single stack
+# of lifeforce dropped from a t3 monster in your maps?
+average_t3_drop_value = 300
