@@ -1,6 +1,21 @@
 [package]
-name = "cropbot"
+name = "croptimizer"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+serde = { version = "1.0.219", features = ["derive"] }
+toml = "0.9.4"
+rayon = "1.10.0"
+
+[lib]
+name = "croptimizer"
+path = "src/lib.rs"
+
+[[bin]]
+name = "cropbot"
+path = "src/main.rs"
+
+[[bin]]
+name = "optimizer"
+path = "src/bin/optimizer.rs"
