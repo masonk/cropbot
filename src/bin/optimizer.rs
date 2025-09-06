@@ -1,5 +1,7 @@
 use rayon::prelude::*;
 use std::fmt;
+use std::fs::File;
+use std::io::Write;
 
 // Import Pair from the lib crate
 use croptimizer::{GameState, Pair};
@@ -188,64 +190,80 @@ fn plot_prob(k: u32, y: f32, b: f32, p: f32, start: &StartingCondition) -> f32 {
 
 fn main() {
     println!("-------------------------------------------------------------------------------");
-    let y_r = 0.45;
-    let b_r = 0.45;
-    let p_r = 0.45;
-    let (y, b, p) = weights_to_probs(y_r, b_r, p_r);
-    println!(
-        "Calculations for {}% reduced yellow, {}% reduced blue, and {}% reduced purple.",
-        y_r * 100.,
-        b_r * 100.,
-        p_r * 100.
-    );
-    println!("Plot probabilities:\n {y:.2} (y)\n {b:.2} (b)\n {p:.2} (p)");
 
-    // Print CSV header
-    println!("starting_condition, probability, yellow_lifeforce, blue_lifeforce, purple_lifeforce");
+    for y_r in [0.45, 0.35, 0.25, 0.0] {
+        for b_r in [0.45, 0.35, 0.25, 0.0] {
+            for p_r in [0.45, 0.35, 0.25, 0.0] {
+                // if y_r > b_r {
+                //     // If yellow is reduced more than blue, we know it's not optimal,
+                //     // because yellow is better htan blue.
+                //     continue;
+                // }
 
-    for k in [3, 4, 5] {
-        // harvest ordinarily has a 50/50 to be 3 or 4. There is an additional coin flip to add a harvest on the atlas tree ("Bumper Crop").
-        let multi = match k {
-            3 => 0.25,
-            4 => 0.50,
-            5 => 0.25,
-            _ => panic!("huh? only 3, 4, and 5-plot harvests are possible"),
-        };
+                let filename = format!(
+                    "y{}_b{}_p{}.csv",
+                    (y_r * 100.) as u32,
+                    (b_r * 100.) as u32,
+                    (p_r * 100.) as u32
+                );
+                let mut file = File::create(&filename).expect("Unable to create file");
+                println!("Writing to {}...", filename);
 
-        let cases: Vec<Vec<u32>> = balls_in_bins(6, k).collect();
-        let results: Vec<String> = cases
-            .into_par_iter()
-            .map(|case| {
-                let start: StartingCondition =
-                    [case[0], case[1], case[2], case[3], case[4], case[5]];
+                let (y, b, p) = weights_to_probs(y_r, b_r, p_r);
 
-                // Convert StartingCondition to Vec<Pair>
-                let mut pairs = Vec::new();
-                for i in 0..6 {
-                    let kind = StartingPairKind::from(i);
-                    let pair = Pair::from(kind);
-                    for _ in 0..start[i] {
-                        pairs.push(pair);
+                // Write CSV header to file
+                writeln!(
+                file,
+                "starting_condition, probability, yellow_lifeforce, blue_lifeforce, purple_lifeforce"
+            )
+            .expect("Unable to write header");
+
+                for k in [3, 4, 5] {
+                    // harvest ordinarily has a 50/50 to be 3 or 4. There is an additional coin flip to add a harvest on the etlas tree ("Bumper Crop").
+                    let multi = match k {
+                        3 => 0.25,
+                        4 => 0.50,
+                        5 => 0.25,
+                        _ => panic!("huh? only 3, 4, and 5-plot harvests are possible"),
+                    };
+
+                    let cases: Vec<Vec<u32>> = balls_in_bins(6, k).collect();
+                    let results: Vec<String> = cases
+                        .into_par_iter()
+                        .map(|case| {
+                            let start: StartingCondition =
+                                [case[0], case[1], case[2], case[3], case[4], case[5]];
+
+                            // Convert StartingCondition to Vec<Pair>
+                            let mut pairs = Vec::new();
+                            for i in 0..6 {
+                                let kind = StartingPairKind::from(i);
+                                let pair = Pair::from(kind);
+                                for _ in 0..start[i] {
+                                    pairs.push(pair);
+                                }
+                            }
+
+                            // Create GameState and find optimal strategy
+                            let mut game = GameState::from_starting_pairs(&pairs);
+                            let optimal = game.find_optimal_strategy();
+
+                            format!(
+                                "{}, {}, {:.2}, {:.2}, {:.2}",
+                                format_starting_condition(&start),
+                                multi * plot_prob(k, y, b, p, &start),
+                                optimal.ev_yellow,
+                                optimal.ev_blue,
+                                optimal.ev_purple
+                            )
+                        })
+                        .collect();
+
+                    for result in results {
+                        writeln!(file, "{}", result).expect("Unable to write line");
                     }
                 }
-
-                // Create GameState and find optimal strategy
-                let mut game = GameState::from_starting_pairs(&pairs);
-                let optimal = game.find_optimal_strategy();
-
-                format!(
-                    "{}, {}, {:.2}, {:.2}, {:.2}",
-                    format_starting_condition(&start),
-                    multi * plot_prob(k, y, b, p, &start),
-                    optimal.ev_yellow,
-                    optimal.ev_blue,
-                    optimal.ev_purple
-                )
-            })
-            .collect();
-
-        for result in results {
-            println!("{}", result);
+            }
         }
     }
 }

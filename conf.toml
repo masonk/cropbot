@@ -1,30 +1,36 @@
+# Prices are in inverse divs. E.g., this says one yellow seed is 1/2200 divs.
+# These were ~prices in mid-league 3.26
 yellow_price = 2200
 blue_price = 4500
 purple_price = 5100
 
 # In 3.26, this is the best possible wilt rate, using infused harvest craft
-# and the atlas tree
+# and the atlas tree. (60% chance NOT to wilt).
 wilt_rate = 0.4
 
 # There were empirically determined by Forgotten Arbiter,
 # https://forgottenarbiter.github.io/Poe-Harvest-Mechanics/
+# There is high uncertaintly in the T4 transition rate, but ultimately 
+# the outcomes are dominated by T3 seeds anyway.
 t2_transition = 0.25
 t3_transition = 0.20
 t4_transition = 0.03
 
 # map tooltip pack size when you press tab in a map
 map_pack_size = 110
-# map tooltip quanity of items dropped when you press tab in the map
+# map tooltip quantity of items dropped when you press tab in the map
 # lifeforce quant is increased by half of this number
+# DO NOT ADD PLAYER QUANT to this, it doesn't affect the outcome. 
+# Only the tooltip matters.
 map_iiq = 350
-# In atlas tree, "Harvest Monsters in your Maps drop x% increased Quantity of Lifeforce"
-# lifeforce quant is in
+# In atlas tree, "Harvest Monsters in your Maps drop x% increased Quantity 
+# of Lifeforce"
 atlas_lifeforce_quant = 18
 # In atlas, "Harvested Plants in your Maps have x% chance chance to spawn an additional Monster"
-# We believe this cannot spawn additional T4 seeds
+# We believe this cannot spawn additional T4 seeds but is a straight multi for T1-T3 seeds.
 atlas_additional_monster_chance = 10
 # In atlas, "Plants Harvested in your Maps have 6% chance to spawn duplicated monsters"
-# This can dupe t4 seeds applies to bosses
+# This CAN dupe t4 seeds
 atlas_monster_dupe_chance = 6
-# are you using a doubling scarab?
+# are you using a doubling scarab?...if you aren't, you should.
 doubling_scarab = true

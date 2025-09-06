@@ -1,4 +1,3 @@
 /target
-cropbot.exe
-CropBotGUI.exe
 *.csv
+!atlas_tables/*.csv

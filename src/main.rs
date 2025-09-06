@@ -1,4 +1,4 @@
-use croptimizer::{get_tables, Config, GameState, OptimalMove, Pair};
+use croptimizer::{get_tables, Config, GameState};
 use std::io::{self, Write};
 
 fn handle_turn(game: &mut GameState, turn: u32) -> bool {
