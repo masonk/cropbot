@@ -74,7 +74,7 @@ With just these remarks we can plot how many of each type of seed we expect to f
 
 Each plot has 23 seeds which evolve independently, so we end up multiplying by 23 when computing plot-level expected values for seeds and divs.
 
-Note that the top graph also has the expected value of a plot upgrade: this multiplies the expected number of seeds by the seed price, so requires us to choose some configuration of conf.toml. This particular chart was made with a configuration approximating mid league 3.25, and is valid only for 3.26 midleague-like conditions.
+Note that the top graph also has the expected value of a plot upgrade: this multiplies the expected number of seeds by the seed price, so requires us to choose some configuration of conf.toml. This particular chart was made with a configuration approximating mid league 3.26, and is valid only for 3.26 midleague-like conditions.
 
 Also note that you can do better than these expectations by making microadjustments based on how individual games actually evolved. 
 
@@ -97,13 +97,13 @@ We now need to fill $n$ spawn points with these 6 pair kinds, with replacement. 
 - $n = 4$ with probability $p = 0.5$
 - $n = 5$ with probability $p = 0.25$
 
-This is classic balls-and-bins from combinatorics, but you have to notice that the *spawn points* are the *stars* and the *pair kinds* are the *bins*. The spawn points are *indistinguishable* but the pair kinds *are distinguishable*.
+This is classic balls-and-bins from combinatorics, but you have to notice that the *spawn points* are the *balls* and the *pair kinds* are the *bins*. The spawn points are *indistinguishable* but the pair kinds *are distinguishable*.
 
 For example, suppose we lay out the bins like this:
 
 $$\boxed{\text{YY}} \quad \boxed{\text{YB}} \quad \boxed{\text{YP}} \quad \boxed{\text{BB}} \quad \boxed{\text{BP}} \quad \boxed{\text{PP}}$$
 
-Then, we distribute the stars among the bins using bars to depict the bins according to the [stars and bars theorem](https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)). For example:
+Then, let's use the stars-and-bars representation. We distribute the stars among the bins using bars to depict the bins according to the [stars and bars theorem](https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)). For example:
 
 $$\star\star \mid \star \mid \star \mid \mid \mid \star$$
 
@@ -143,3 +143,4 @@ where $\binom{y+b+p}{y,b,p}$ is the multinomial coefficient.
 
 
 ...this is exactly what optimizer does.
+
