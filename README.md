@@ -74,12 +74,14 @@ With just these remarks we can plot how many of each type of seed we expect to f
 
 Each plot has 23 seeds which evolve independently, so we end up multiplying by 23 when computing plot-level expected values for seeds and divs.
 
-Note that the top graph also has the expected value of a plot upgrade: this assumes perfectly play under some configuration of conf.toml, and is valid only for 3.26 midleague-like conditions, but it's exactly what you get if you actually use cropbot.exe to run each game, and you can do better than these expectations by making microadjustments based on how the game actually evolved.
+Note that the top graph also has the expected value of a plot upgrade: this multiplies the expected number of seeds by the seed price, so requires us to choose some configuration of conf.toml. This particular chart was made with a configuration approximating mid league 3.25, and is valid only for 3.26 midleague-like conditions.
+
+Also note that you can do better than these expectations by making microadjustments based on how individual games actually evolved. 
 
 ## COMPUTING STARTING CONDITIONS
 
 There are up to 10 crops in a 5-plot harvest, each of which can take one of 3 colors each. Before symmetries, that would be $3^{10} = 59,049$ distinct starting conditions.
-c
+
 However, there are important symmetries to exploit:
 
 With any plot pair, the order is irrelevant. $\text{YB} \equiv \text{BY}$ have the same outcomes in terms of expected value.
@@ -138,5 +140,6 @@ Given this, we can compute the probability of any harvest configuration. For a h
 $$P(\text{harvest}) = \binom{y+b+p}{y,b,p} \cdot p_Y^y \cdot p_B^b \cdot p_P^p$$
 
 where $\binom{y+b+p}{y,b,p}$ is the multinomial coefficient.
+
 
 ...this is exactly what optimizer does.
