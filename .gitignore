@@ -1,3 +1,3 @@
 /target
 *.csv
-!atlas_tables/*.csv
+!atlas_tables_3.26/*.csv
