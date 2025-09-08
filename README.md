@@ -18,7 +18,7 @@ I've also included a standalone .exe for windows in //releases/cropbot.exe
 
 `optimizer` calculates the probability of every initial starting condition, then uses the same functionality as `cropbot` 
 to calculate the EV of each starting condition given optimal play.  It emits tables of seed quantities per starting condition.
-The weighted sum of these seed quantities is the expected value *per map* under *some configuration of the atlas*.
+The probability-weighted sum of these seed quantities is the expected value *per map* under *some configuration of the atlas*.
 
 These tables can definitively answer the question of which configuration of the atlas passives have the best lifeforce yield in the long run.
 
@@ -143,4 +143,5 @@ where $\binom{y+b+p}{y,b,p}$ is the multinomial coefficient.
 
 
 ...this is exactly what optimizer does.
+
 
