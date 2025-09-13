@@ -74,9 +74,7 @@ With just these remarks we can plot how many of each type of seed we expect to f
 
 Each plot has 23 seeds which evolve independently, so we end up multiplying by 23 when computing plot-level expected values for seeds and divs.
 
-Note that the top graph also has the expected value of a plot upgrade: this multiplies the expected number of seeds by the seed price, so requires us to choose some configuration of conf.toml. This particular chart was made with a configuration approximating mid league 3.26, and is valid only for 3.26 midleague-like conditions.
-
-Also note that you can do better than these expectations by making microadjustments based on how individual games actually evolved. 
+Note that the top graph also has the expected *lifeforce value* of a plot upgrade. This doesn't account for the difference in prices between lifeforce of different colors. It also does not accurately tell you the expected value of a specific plot that you are considering upgrading, because a real plot in a real game has more information of relevance. Most importantly, a real plot has an exactly-known number of T2 seeds, and as T3 seeds are the vast majority of the profits, the number of T2 seeds (which are the only ones that convert into T3 seeds) is the most important variable in determining the expected value of an upgrade for a real plot. This graph tells you the lifeforce expectation over *all possible* plots. 
 
 ## COMPUTING STARTING CONDITIONS
 
@@ -143,5 +141,6 @@ where $\binom{y+b+p}{y,b,p}$ is the multinomial coefficient.
 
 
 ...this is exactly what optimizer does.
+
 
 
